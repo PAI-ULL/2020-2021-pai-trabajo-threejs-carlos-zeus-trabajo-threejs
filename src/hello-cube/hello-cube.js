@@ -24,7 +24,7 @@ camera.position.set(0, 0, 10);
 const geometry = new THREE.BoxBufferGeometry(2, 2, 2);
 
 // create a default (white) Basic material
-const material = new THREE.MeshBasicMaterial();
+const material = new THREE.MeshBasicMaterial({wireframe: true});
 
 // create a Mesh containing the geometry and material
 const cube = new THREE.Mesh(geometry, material);
@@ -43,8 +43,11 @@ container.append(renderer.domElement);
 
 // render, or 'create a still image', of the scene
 const animation = function() {
-  cube.rotateX(0.1);
-  cube.rotateY(0.1);
+  requestAnimationFrame(animation);
+  cube.rotateX(0.01);
+  cube.rotateY(0.01);
+  cube.rotateZ(0.01);
+
   renderer.render(scene, camera);
 };
 
