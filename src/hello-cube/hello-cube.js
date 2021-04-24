@@ -6,11 +6,11 @@ const container = document.querySelector('#container');
 const scene = new THREE.Scene();
 
 // Set the background color
-scene.background = new THREE.Color('skyblue');
+scene.background = new THREE.Color('black');
 
 // Create a camera
 const fov = 35; // AKA Field of View
-const aspect = container.clientWidth / container.clientHeight;
+const aspect = window.innerWidth / window.innerHeight;
 const near = 0.1; // the near clipping plane
 const far = 100; // the far clipping plane
 
@@ -36,11 +36,18 @@ scene.add(cube);
 const renderer = new THREE.WebGLRenderer();
 
 // next, set the renderer to the same size as our container element
-renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setSize(window.innerWidth, window.innerHeight);
 
 // add the automatically created <canvas> element to the page
 container.append(renderer.domElement);
 
 // render, or 'create a still image', of the scene
-renderer.render(scene, camera);
+const animation = function() {
+  cube.rotateX(0.1);
+  cube.rotateY(0.1);
+  renderer.render(scene, camera);
+};
+
+animation();
+
 
