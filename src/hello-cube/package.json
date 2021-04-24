@@ -1,0 +1,18 @@
+{
+  "name": "hello-cube",
+  "version": "1.0.0",
+  "description": "A simple program to representate Three.Js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andres Zeus Hernandez Impini",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.128.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
