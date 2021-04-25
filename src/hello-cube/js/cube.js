@@ -30,6 +30,11 @@ export class Cube {
   #container;
   #geometry;
   #material;
+  #camera;
+  #shape;
+  #scene;
+  #renderer;
+
   /**
    * Construct the  3d cube with all of it's features
    * @param {*} width 
@@ -37,17 +42,17 @@ export class Cube {
    */
   constructor(width, height) {
     this.#container = document.querySelector('#container');
-    
+
     this.#aspect = width / height;
     // create a geometry
     this.#geometry = new THREE.BoxBufferGeometry(FACE_SIZE, FACE_SIZE, FACE_SIZE);
-    
+
     // create a default (white) Basic material
     this.#material = new THREE.MeshBasicMaterial({ wireframe: true });
-    this.camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
-    this.shape = Object.assign(new THREE.Mesh(this.#geometry, this.#material));
-    this.scene = new THREE.Scene();
-    this.renderer = new THREE.WebGLRenderer();
+    this.#camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
+    this.#shape = Object.assign(new THREE.Mesh(this.#geometry, this.#material));
+    this.#scene = new THREE.Scene();
+    this.#renderer = new THREE.WebGLRenderer();
   }
 
   /**
@@ -56,37 +61,41 @@ export class Cube {
   render() {
     // every object is initially created at ( 0, 0, 0 )
     // move the camera back so we can view the scene
-    this.camera.position.set(0, 0, 10);
+    this.#camera.position.set(0, 0, 10);
 
-  // create a Mesh containing the geometry and material
+    // create a Mesh containing the geometry and material
 
     // Create a Scene
     // Set the background color
-    this.scene.background = new THREE.Color('black');
+    this.#scene.background = new THREE.Color('black');
     // add the mesh to the scene
-    this.scene.add(this.shape);
+    this.#scene.add(this.#shape);
 
     // create the renderer
 
     // next, set the renderer to the same size as our container element
-    this.renderer.setSize(WIDTH, HEIGHT);
+    this.#renderer.setSize(WIDTH, HEIGHT);
 
     // add the automatically created <canvas> element to the page
-    this.#container.append(this.renderer.domElement);
+    this.#container.append(this.#renderer.domElement);
 
     // render, or 'create a still image', of the scene
- 
-    this.animation();
+
+    this.#animation();
   }
 
-   animation() {
-       requestAnimationFrame( () => this.animation());
- 
-       this.shape.rotateX(0.01);
-       this.shape.rotateY(0.01);
-       this.shape.rotateZ(0.01);
- 
-       this.renderer.render(this.scene, this.camera);
-     };
+  /**
+   * this function produce the movement of the cube 
+   * @private
+   */
+  #animation() {
+    requestAnimationFrame(() => this.#animation());
+
+    this.#shape.rotateX(0.01);
+    this.#shape.rotateY(0.01);
+    this.#shape.rotateZ(0.01);
+
+    this.#renderer.render(this.#scene, this.#camera);
+  };
 }
 
