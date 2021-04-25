@@ -37,53 +37,56 @@ export class Cube {
    */
   constructor(width, height) {
     this.#container = document.querySelector('#container');
-
+    
     this.#aspect = width / height;
     // create a geometry
     this.#geometry = new THREE.BoxBufferGeometry(FACE_SIZE, FACE_SIZE, FACE_SIZE);
-
+    
     // create a default (white) Basic material
     this.#material = new THREE.MeshBasicMaterial({ wireframe: true });
+    this.camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
+    this.shape = Object.assign(new THREE.Mesh(this.#geometry, this.#material));
+    this.scene = new THREE.Scene();
+    this.renderer = new THREE.WebGLRenderer();
   }
 
   /**
    * 
    */
   render() {
-    const camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
     // every object is initially created at ( 0, 0, 0 )
     // move the camera back so we can view the scene
-    camera.position.set(0, 0, 10);
+    this.camera.position.set(0, 0, 10);
 
-    // create a Mesh containing the geometry and material
-    const cube = new THREE.Mesh(this.#geometry, this.#material);
+  // create a Mesh containing the geometry and material
 
     // Create a Scene
-    const scene = new THREE.Scene();
     // Set the background color
-    scene.background = new THREE.Color('black');
+    this.scene.background = new THREE.Color('black');
     // add the mesh to the scene
-    scene.add(cube);
+    this.scene.add(this.shape);
 
     // create the renderer
-    const renderer = new THREE.WebGLRenderer();
 
     // next, set the renderer to the same size as our container element
-    renderer.setSize(WIDTH, HEIGHT);
+    this.renderer.setSize(WIDTH, HEIGHT);
 
     // add the automatically created <canvas> element to the page
-    this.#container.append(renderer.domElement);
+    this.#container.append(this.renderer.domElement);
 
     // render, or 'create a still image', of the scene
-    const animation = function () {
-      requestAnimationFrame(animation);
-      cube.rotateX(0.01);
-      cube.rotateY(0.01);
-      cube.rotateZ(0.01);
-
-      renderer.render(scene, camera);
-    };
-    animation();
+ 
+    this.animation();
   }
+
+   animation() {
+       requestAnimationFrame( () => this.animation());
+ 
+       this.shape.rotateX(0.01);
+       this.shape.rotateY(0.01);
+       this.shape.rotateZ(0.01);
+ 
+       this.renderer.render(this.scene, this.camera);
+     };
 }
 
