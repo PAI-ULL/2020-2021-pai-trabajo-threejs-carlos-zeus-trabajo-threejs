@@ -1,5 +1,3 @@
-
-
 const container = document.querySelector('#container');
 
 // Create a Scene
@@ -24,7 +22,7 @@ camera.position.set(0, 0, 10);
 const geometry = new THREE.BoxBufferGeometry(2, 2, 2);
 
 // create a default (white) Basic material
-const material = new THREE.MeshBasicMaterial({wireframe: true});
+const material = new THREE.MeshBasicMaterial({ wireframe: true });
 
 // create a Mesh containing the geometry and material
 const cube = new THREE.Mesh(geometry, material);
@@ -42,7 +40,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 container.append(renderer.domElement);
 
 // render, or 'create a still image', of the scene
-const animation = function() {
+const animation = function () {
   requestAnimationFrame(animation);
   cube.rotateX(0.01);
   cube.rotateY(0.01);
