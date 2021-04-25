@@ -44,26 +44,26 @@ export class Cube {
     this.#container = document.querySelector('#container');
 
     this.#aspect = width / height;
-    // create a geometry
+    // Create a geometry
     this.#geometry = new THREE.BoxBufferGeometry(FACE_SIZE, FACE_SIZE, FACE_SIZE);
 
-    // create a default (white) Basic material
+    // Create a Mesh containing the geometry and material
+    // with default (white) Basic material
     this.#material = new THREE.MeshBasicMaterial({ wireframe: true });
-    this.#camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
     this.#shape = Object.assign(new THREE.Mesh(this.#geometry, this.#material));
+    this.#camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
     this.#scene = new THREE.Scene();
     this.#renderer = new THREE.WebGLRenderer();
   }
 
   /**
-   * 
+   * This method has the task of render the cube so we 
+   * can see it in the web site
    */
   render() {
-    // every object is initially created at ( 0, 0, 0 )
+    // Every object is initially created at ( 0, 0, 0 )
     // move the camera back so we can view the scene
     this.#camera.position.set(0, 0, 10);
-
-    // create a Mesh containing the geometry and material
 
     // Create a Scene
     // Set the background color
@@ -80,7 +80,6 @@ export class Cube {
     this.#container.append(this.#renderer.domElement);
 
     // render, or 'create a still image', of the scene
-
     this.#animation();
   }
 
