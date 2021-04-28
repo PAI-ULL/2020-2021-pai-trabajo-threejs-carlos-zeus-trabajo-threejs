@@ -62,8 +62,8 @@ export class Camera {
   }
 
   /**
+   * Add the geometry that the camera will use to represent the views
   * @private
-  * Add the geometry that the camera will use
   */
   #addGeometry() {
     this.#geometry = new THREE.BoxGeometry();

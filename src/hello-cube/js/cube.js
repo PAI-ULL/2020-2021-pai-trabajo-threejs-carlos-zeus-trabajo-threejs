@@ -7,7 +7,7 @@
  * @author Carlos Garcia Lezcano
  * @author Andres Zeus Hernadez Impini
  * @date   25 Abril 2021
- * @brief  Testing of the cube
+ * @brief  Class that create a 3D cube
  */
 
 'use strict';
@@ -34,13 +34,16 @@ export class Cube {
   #shape;
   #scene;
   #renderer;
+  #empty;
+  #border;
 
   /**
    * Construct the  3d cube with all of it's features
    * @param {*} width 
    * @param {*} height 
    */
-  constructor(width, height) {
+  constructor(width, height, empty) {
+    this.#empty = empty;
     this.#container = document.querySelector('#container');
 
     this.#aspect = width / height;
@@ -49,7 +52,12 @@ export class Cube {
 
     // Create a Mesh containing the geometry and material
     // with default (white) Basic material
-    this.#material = new THREE.MeshBasicMaterial({ wireframe: true });
+    if (this.#empty) {
+      this.#material = new THREE.MeshBasicMaterial({ wireframe: true });
+    } else {
+      console.log('indf');
+      this.#material = new THREE.MeshLambertMaterial({ color: 'rgb(100, 139, 139)'});
+    }
     this.#shape = Object.assign(new THREE.Mesh(this.#geometry, this.#material));
     this.#camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
     this.#scene = new THREE.Scene();
@@ -70,6 +78,21 @@ export class Cube {
     this.#scene.background = new THREE.Color('black');
     // add the mesh to the scene
     this.#scene.add(this.#shape);
+
+    if (!this.#empty) {
+      console.log('in');
+      const outlineMaterial1 = new THREE.MeshBasicMaterial( { color: 'white',wireframe   : true } );
+      this.#border  = new THREE.Mesh(this.#geometry, outlineMaterial1);
+  
+      this.#scene.add(this.#border);
+
+      //Create a pointer light
+      const light = new THREE.PointLight(0xFFFF00,0.5);
+      //const light = new THREE.AmbientLight(0xFFFF00,0.5);
+
+      light.position.set( 0, 10, 25 );
+      this.#scene.add( light );
+    }
 
     // create the renderer
     // next, set the renderer to the same size as our container element
@@ -92,6 +115,12 @@ export class Cube {
     this.#shape.rotateX(0.01);
     this.#shape.rotateY(0.01);
     this.#shape.rotateZ(0.01);
+
+    if (!this.#empty) {
+      this.#border.rotateX(0.01);
+      this.#border.rotateY(0.01);
+      this.#border.rotateZ(0.01);
+    }
 
     this.#renderer.render(this.#scene, this.#camera);
   };

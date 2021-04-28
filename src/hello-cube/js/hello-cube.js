@@ -7,9 +7,11 @@
  * @author Carlos Garcia Lezcano 
  * @author Andres Zeus Hernadez Impini
  * @date   25 Abril 2021
- * @brief  Testing of the cube
+ * @brief   Client program of the 3D cube
  */
 
-import { Cube } from './colour-cube.js'
-const cube = new Cube(window.innerWidth, window.innerHeight);
+'use strict';
+
+import { Cube } from './cube.js'
+const cube = new Cube(window.innerWidth, window.innerHeight, true);
 cube.render();
