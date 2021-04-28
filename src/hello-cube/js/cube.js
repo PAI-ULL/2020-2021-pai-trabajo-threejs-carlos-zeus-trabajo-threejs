@@ -10,7 +10,7 @@
  * @brief  Testing of the cube
  */
 
-'use strict'
+'use strict';
 
 const FIELD_OF_VIEW = 35;
 const WIDTH = window.innerWidth;
@@ -97,4 +97,3 @@ export class Cube {
     this.#renderer.render(this.#scene, this.#camera);
   };
 }
-
