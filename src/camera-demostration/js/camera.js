@@ -30,7 +30,7 @@ export class Camera {
   * @param {*} width 
   * @param {*} height 
   */
-  constructor(width, height) {
+  constructor(width, height, type) {
     this.#width = width;
     this.#height = height;
     this.#scene = new THREE.Scene();
@@ -40,7 +40,11 @@ export class Camera {
       0.1,
       2000
     );
-    this.#otherCamera = new THREE.PerspectiveCamera(75, this.#width / this.#height, 3, 10);
+    if (type === 'Perspective') {
+      this.#otherCamera = new THREE.PerspectiveCamera(75, this.#width/ this.#height, 3, 10);
+    } else {
+      this.#otherCamera = new THREE.OrthographicCamera(5, -5, 5, -5, 3, 10);
+    }
     this.#helper =  new THREE.CameraHelper(this.#otherCamera);
     this.#scene.add(this.#helper); 
   }
@@ -69,6 +73,7 @@ export class Camera {
     });
     this.#cube = new THREE.Mesh(this.#geometry, this.#material);
     this.#cube.position.z = -5;
+    //camera.position.z = 5;
     this.#scene.add(this.#cube);
   }
 
