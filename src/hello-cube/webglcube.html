@@ -9,6 +9,7 @@
    <div class="topnav">
       <h1 style="color: darkcyan;">Web-gl Cube</h1>
       <a class="active" href="../index.html">Home</a>
+      <a href="./hello-cube.html">Colour Cube</a>
       <a href="./hello-cube.html">ThreeJs cube</a>
    </div>
    <canvas width="570" height="570" id="my_Canvas"></canvas>
@@ -180,9 +181,9 @@
       var animate = function (time) {
 
          var dt = time - time_old;
-         rotateZ(mov_matrix, dt * 0.005);//time
-         rotateY(mov_matrix, dt * 0.002);
-         rotateX(mov_matrix, dt * 0.003);
+         rotateZ(mov_matrix, dt * 0.001);//time
+         rotateY(mov_matrix, dt * 0.001);
+         rotateX(mov_matrix, dt * 0.001);
          time_old = time;
 
          gl.enable(gl.DEPTH_TEST);

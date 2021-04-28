@@ -34,6 +34,7 @@ export class Cube {
   #shape;
   #scene;
   #renderer;
+  #border;
 
   /**
    * Construct the  3d cube with all of it's features
@@ -49,7 +50,7 @@ export class Cube {
 
     // Create a Mesh containing the geometry and material
     // with default (white) Basic material
-    this.#material = new THREE.MeshBasicMaterial({ wireframe: true });
+    this.#material = new THREE.MeshLambertMaterial({ color: 'rgb(0, 139, 139)'});
     this.#shape = Object.assign(new THREE.Mesh(this.#geometry, this.#material));
     this.#camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
     this.#scene = new THREE.Scene();
@@ -65,11 +66,21 @@ export class Cube {
     // move the camera back so we can view the scene
     this.#camera.position.set(0, 0, 10);
 
+    //Create a pointer light
+    let light = new THREE.PointLight(0xFFFF00);
+    //let light = new THREE.AmbientLight(0xFFFF00,0.5);
+
+    light.position.set( 0, 10, 25 );
+    this.#scene.add( light );
     // Create a Scene
     // Set the background color
     this.#scene.background = new THREE.Color('black');
     // add the mesh to the scene
     this.#scene.add(this.#shape);
+    const outlineMaterial1 = new THREE.MeshBasicMaterial( { color: 'white',wireframe   : true } );
+    this.#border  = new THREE.Mesh(this.#geometry, outlineMaterial1);
+
+    this.#scene.add(this.#border);
 
     // create the renderer
     // next, set the renderer to the same size as our container element
@@ -92,6 +103,10 @@ export class Cube {
     this.#shape.rotateX(0.01);
     this.#shape.rotateY(0.01);
     this.#shape.rotateZ(0.01);
+
+    this.#border.rotateX(0.01);
+    this.#border.rotateY(0.01);
+    this.#border.rotateZ(0.01);
 
     this.#renderer.render(this.#scene, this.#camera);
   };

@@ -10,6 +10,6 @@
  * @brief  Testing of the cube
  */
 
-import { Cube } from './colour-cube.js'
+import { Cube } from './cube.js'
 const cube = new Cube(window.innerWidth, window.innerHeight);
 cube.render();
