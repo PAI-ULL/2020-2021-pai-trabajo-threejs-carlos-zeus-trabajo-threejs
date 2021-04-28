@@ -1,0 +1,4 @@
+import {Camera} from './camera.js'
+
+let camera = new Camera(window.innerWidth,window.innerHeight);
+camera.render();

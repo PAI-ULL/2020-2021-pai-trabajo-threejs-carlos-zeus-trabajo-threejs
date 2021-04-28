@@ -10,58 +10,81 @@
  * @brief  Camera demostration
  */
 
+'use strict';
 
+export class Camera {
+  /**@private */
+  #width = 0;
+  #height = 0;
+  #otherCamera;
+  #movement = 0;
+  #camera;
+  #helper;
+  #scene;
+  #renderer;
+  #geometry;
+  #material;
+  #cube;
+  /**
+  * Construct the  3d cube with all of it's features
+  * @param {*} width 
+  * @param {*} height 
+  */
+  constructor(width, height) {
+    this.#width = width;
+    this.#height = height;
+    this.#scene = new THREE.Scene();
+    this.#camera =new THREE.PerspectiveCamera(
+      75,
+      this.#width /this.#height,
+      0.1,
+      2000
+    );
+    this.#otherCamera = new THREE.PerspectiveCamera(75, this.#width / this.#height, 3, 10);
+    this.#helper =  new THREE.CameraHelper(this.#otherCamera);
+    this.#scene.add(this.#helper); 
+  }
 
-let scene = new THREE.Scene();
+  /**
+  * This method has the task of render the cube so we 
+  * can see it in the web site
+  */
+  render() { 
+    this.#renderer = new THREE.WebGLRenderer();
+    this.#renderer.setSize(this.#width, this.#height);
+    document.body.appendChild(this.#renderer.domElement);
+    this.#addGeometry();
+    this.#animation();
+  }
 
-//add camera
-let camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    2000
-);
+  /**
+  * @private
+  * Add the geometry that the camera will use
+  */
+  #addGeometry() {
+    this.#geometry = new THREE.BoxGeometry();
+    this.#material = new THREE.MeshBasicMaterial({
+        color: 0x00ff00,
+        wireframe: true,
+    });
+    this.#cube = new THREE.Mesh(this.#geometry, this.#material);
+    this.#cube.position.z = -5;
+    this.#scene.add(this.#cube);
+  }
 
-//let newcamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 3, 10);
-let newcamera = new THREE.OrthographicCamera(5, -5, 5, -5, 3, 10);
+  /**
+   * Show the representation of how the camara will be positionate
+  * @private
+  */
+  #animation() {
+    requestAnimationFrame(() => this.#animation());
 
-let helper = new THREE.CameraHelper(newcamera);
+    this.#camera.lookAt(this.#otherCamera.position);
 
-scene.add(helper);
+    this.#camera.position.x = Math.cos(this.#movement) * 30;
+    this.#camera.position.z = Math.sin(this.#movement) * 30;
+    this.#movement += 0.01;
 
-//renderer
-let renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-//add geometry
-let geometry = new THREE.BoxGeometry();
-let material = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
-    wireframe: true,
-});
-let cube = new THREE.Mesh(geometry, material);
-cube.position.z = -5;
-scene.add(cube);
-
-//camera.position.z = 5;
-
-//animation
-let i = 0;
-let animate = function () {
-    requestAnimationFrame(animate);
-
-    camera.lookAt(newcamera.position);
-
-    camera.position.x = Math.cos(i) * 30;
-    camera.position.z = Math.sin(i) * 30;
-
-    i += 0.01;
-
-    //cube.rotation.x += 0.01;
-    //cube.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
+    this.#renderer.render(this.#scene, this.#camera);
+  };
 };
-
-animate();

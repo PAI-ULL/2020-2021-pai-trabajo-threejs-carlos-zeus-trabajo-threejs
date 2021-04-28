@@ -9,6 +9,7 @@
  * @date   25 Abril 2021
  * @brief  Testing of the cube
  */
+
 import { Cube } from './cube.js'
 const cube = new Cube(window.innerWidth, window.innerHeight);
 cube.render();
