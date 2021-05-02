@@ -13,5 +13,5 @@
 'use strict';
 
 import { Cube } from './cube.js'
-const cube = new Cube(window.innerWidth, window.innerHeight,false);
+const cube = new Cube(window.innerWidth, window.innerHeight, false);
 cube.render();
