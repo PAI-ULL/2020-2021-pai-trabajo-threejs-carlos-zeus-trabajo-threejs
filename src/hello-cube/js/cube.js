@@ -55,8 +55,7 @@ export class Cube {
     if (this.#empty) {
       this.#material = new THREE.MeshBasicMaterial({ wireframe: true });
     } else {
-      console.log('indf');
-      this.#material = new THREE.MeshLambertMaterial({ color: 'rgb(100, 139, 139)'});
+      this.#material = new THREE.MeshLambertMaterial({ color: 'rgb(100, 139, 139)' });
     }
     this.#shape = Object.assign(new THREE.Mesh(this.#geometry, this.#material));
     this.#camera = new THREE.PerspectiveCamera(this.#fov, this.#aspect, this.#near, this.#far);
@@ -80,18 +79,17 @@ export class Cube {
     this.#scene.add(this.#shape);
 
     if (!this.#empty) {
-      console.log('in');
-      const outlineMaterial1 = new THREE.MeshBasicMaterial( { color: 'white',wireframe   : true } );
-      this.#border  = new THREE.Mesh(this.#geometry, outlineMaterial1);
-  
+      const outlineMaterial1 = new THREE.MeshBasicMaterial({ color: 'white', wireframe: true });
+      this.#border = new THREE.Mesh(this.#geometry, outlineMaterial1);
+
       this.#scene.add(this.#border);
 
       //Create a pointer light
-      const light = new THREE.PointLight(0xFFFF00,0.5);
-      //const light = new THREE.AmbientLight(0xFFFF00,0.5);
+      const light = new THREE.DirectionalLight(0xFFFF00, 1);
+      //const light = new THREE.AmbientLight(0xFFFF00, 0.5);
 
-      light.position.set( 0, 10, 25 );
-      this.#scene.add( light );
+      light.position.set(0, 10, 25);
+      this.#scene.add(light);
     }
 
     // create the renderer
