@@ -85,8 +85,8 @@ export class Cube {
       this.#scene.add(this.#border);
 
       //Create a pointer light
-      const light = new THREE.DirectionalLight(0xFFFF00, 1);
-      //const light = new THREE.AmbientLight(0xFFFF00, 0.5);
+      //const light = new THREE.DirectionalLight(0xFFFF00, 1);
+      const light = new THREE.AmbientLight(0xFFFF00, 0.5);
 
       light.position.set(0, 10, 25);
       this.#scene.add(light);
