@@ -1,0 +1,21 @@
+{
+  "name": "hello-cube",
+  "version": "1.0.0",
+  "description": "A simple program to representate Three.Js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Andres Zeus Hernandez Impini",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "express": "^4.17.1",
+    "mocha": "^8.3.2",
+    "three": "^0.128.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
